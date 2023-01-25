@@ -48,5 +48,6 @@ HAVING status not in ('Closed', 'Resolved');
 
 Для запуска приложения необходимо скачать репозиторий и запустить скрипт:
 ```sh
-python viewer.py 
+python3 assets_graph/viewer.py
 ```
+И открыть приложение по адресу http://127.0.0.1:8050/
