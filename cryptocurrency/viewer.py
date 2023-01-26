@@ -1,4 +1,5 @@
 from dash import Dash, dcc, html, Input, Output
+from dateutil.relativedelta import relativedelta
 import plotly.express as px
 from datetime import date
 import req
@@ -8,7 +9,7 @@ all_currency = req.get_assets_symbol()
 currency_dict = req.get_assets()
 
 app.layout = html.Div([
-    # html.H4(" cryptocurrencies"),
+    html.H1("Cryptocurrency stat"),
     html.Div([
         "Select an asset:",
         dcc.Dropdown(
@@ -16,14 +17,17 @@ app.layout = html.Div([
             all_currency[0],
             id='my-input')
     ]),
-    dcc.DatePickerRange(
-        id='my-date-picker-range',
-        # min_date_allowed=date(2020, 8, 5),
-        # max_date_allowed=date(2023, 1, 25),
-        # initial_visible_month=date(2022, 12, 25),
-        start_date=date(2022, 12, 25),
-        end_date=date(2023, 1, 25)
-    ),
+    html.Div([
+        dcc.DatePickerRange(
+            display_format='DD.MM.YYYY',
+            id='my-date-picker-range',
+            # min_date_allowed=date(2020, 8, 5),
+            max_date_allowed=date.today(),
+            # initial_visible_month=date(2022, 12, 25),
+            # start_date_placeholder_text='Date from',
+            start_date=date.today()-relativedelta(months=1),
+            end_date=date.today())
+    ]),
     html.Div(id='output-container-date-picker-range'),
     html.Br(),
     html.Div(id='my-output'),
