@@ -3,7 +3,6 @@ import plotly.express as px
 from datetime import date
 import req
 
-
 app = Dash(__name__)
 all_currency = req.get_assets_symbol()
 currency_dict = req.get_assets()
@@ -15,8 +14,8 @@ app.layout = html.Div([
         dcc.Dropdown(
             all_currency,
             all_currency[0],
-            id='my-input')   
-        ]),
+            id='my-input')
+    ]),
     dcc.DatePickerRange(
         id='my-date-picker-range',
         # min_date_allowed=date(2020, 8, 5),

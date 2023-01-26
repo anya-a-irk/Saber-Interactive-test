@@ -11,6 +11,7 @@ def get_assets_symbol():
     assets_symbol = [i['symbol'] for i in assets['data']]
     return assets_symbol
 
+
 def get_assets():
     assets = requests.get(url_assets).json()
     currency = {}
@@ -18,10 +19,12 @@ def get_assets():
         currency[i['symbol']] = i['id']
     return currency
 
+
 def get_milliseconds(data):
     # dt_obj = datetime.strptime(data, data_format)
     millisec = data.timestamp() * 1000
     return millisec
+
 
 def get_df(asset, start_date, end_date):
     data1 = get_milliseconds(datetime.datetime.strptime(start_date, data_format))
@@ -37,4 +40,3 @@ def get_df(asset, start_date, end_date):
         d = {'price': [], 'time': []}
         df = pd.DataFrame(data=d)
     return df
-
