@@ -7,6 +7,7 @@ import req
 app = Dash(__name__)
 all_currency = req.get_assets_symbol()
 currency_dict = req.get_assets()
+graph_type = ['bar', 'line']
 
 app.layout = html.Div([
     html.H1("Cryptocurrency stat"),
@@ -16,6 +17,13 @@ app.layout = html.Div([
             all_currency,
             all_currency[0],
             id='my-input')
+    ]),
+    html.Div([
+        "Select graph type:",
+        dcc.Dropdown(
+            graph_type,
+            graph_type[0],
+            id='graph-type')
     ]),
     html.Div([
         dcc.DatePickerRange(
@@ -40,12 +48,13 @@ app.layout = html.Div([
 @app.callback(
     Output(component_id='example-graph', component_property='figure'),
     Input(component_id='my-input', component_property='value'),
+    Input(component_id='graph-type', component_property='value'),
     Input(component_id='my-date-picker-range', component_property='start_date'),
     Input(component_id='my-date-picker-range', component_property='end_date')
 )
-def update_output_div(input_value, start_date, end_date):
+def update_output_div(input_value, graph, start_date, end_date):
     df = req.get_df(currency_dict[input_value], start_date, end_date)
-    fig = px.line(df, x="time", y="price")
+    fig = px.bar(df, x="time", y="price") if graph == 'bar' else px.line(df, x="time", y="price")
     return fig
 
 
